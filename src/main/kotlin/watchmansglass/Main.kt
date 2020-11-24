@@ -3,6 +3,8 @@ package watchmansglass
 import watchmansglass.data.raw.Deck
 import watchmansglass.data.raw.Element
 import watchmansglass.data.raw.Mod
+import watchmansglass.dsl.RecipeBuilder
+import watchmansglass.dsl.mod
 import watchmansglass.mods.compat.compat
 import java.io.IOException
 import java.nio.file.*
@@ -28,15 +30,9 @@ fun copyFolder(source: Path, target: Path, vararg options: CopyOption?) {
 
 fun main() {
     vanilla = Mod.loadVanilla(Paths.get("content_norm"))
-    compat().saveTo(Paths.get("C:\\Users\\igore\\AppData\\LocalLow\\Weather Factory\\Cultist Simulator\\mods\\compat"))
-    compat().saveTo(Paths.get("compat"))
-//    copyFolder(Paths.get("compat.images"),
-//        Paths.get("C:\\Users\\igore\\AppData\\LocalLow\\Weather Factory\\Cultist Simulator\\mods\\compat\\images"))
-//    val icondest = Paths.get("C:\\Users\\igore\\AppData\\LocalLow\\Weather Factory\\Cultist Simulator\\mods\\compat\\cover.png")
-//    if(Files.exists(icondest)) Files.delete(icondest)
-//    Files.copy(Paths.get("icon.png"), icondest)
-//    seekerInit()
-//    seeker.saveTo(Paths.get("/Users/gt22/Library/Application Support/Weather Factory/Cultist Simulator/mods/seeker"))
+    val cmp = compat()
+    cmp.saveTo(Paths.get("C:\\Users\\igore\\AppData\\LocalLow\\Weather Factory\\Cultist Simulator\\mods\\compat"))
+    cmp.saveTo(Paths.get("compat"))
 }
 
 fun makeIssues() {
