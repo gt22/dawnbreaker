@@ -86,6 +86,25 @@ data class Mod(
     var additionalfiles: Path? = null
 ) {
 
+    //Accessors
+
+    val elements: List<Element>
+        get() = sources.flatMap { it.value.elements }
+    val recipes: List<Recipe>
+        get() = sources.flatMap { it.value.recipes }
+    val decks: List<Deck>
+        get() = sources.flatMap { it.value.decks }
+    val legacies: List<Legacy>
+        get() = sources.flatMap { it.value.legacies }
+    val endings: List<Ending>
+        get() = sources.flatMap { it.value.endings }
+    val verbs: List<Verb>
+        get() = sources.flatMap { it.value.verbs }
+    val cultures: List<Culture>
+        get() = sources.flatMap { it.value.cultures }
+
+    //End accessors
+
     //Automatically enabled if loaded as vanilla
     var checkOnSearch = false
 
