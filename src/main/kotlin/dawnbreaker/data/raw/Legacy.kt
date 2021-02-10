@@ -13,11 +13,13 @@ data class Legacy(
     var image: String = "",
     var newstart: Boolean = false,
     var fromending: String = "",
+    @SerialName("availablewithoutendingmatch")
     var availableWithoutEndingMatch: Boolean = true,
+    @SerialName("excludesonending")
     var excludesOnEnding: MutableList<String> = mutableListOf(),
-    @SerialName("excludesOnEnding\$add")
+    @SerialName("excludesonending\$add")
     var excludesOnEnding_add: MutableList<String> = mutableListOf(),
-    @SerialName("excludesOnEnding\$remove")
+    @SerialName("excludesonending\$remove")
     var excludesOnEnding_remove: MutableList<String> = mutableListOf(),
     var startingverbid: String = "",
     var effects: MutableMap<String, Int> = mutableMapOf(),

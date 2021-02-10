@@ -11,7 +11,9 @@ data class Element(
     var description: String = "",
     var comments: String = "",
     var icon: String = "",
+    @SerialName("isaspect")
     var isAspect: Boolean = false,
+    @SerialName("ishidden")
     var isHidden: Boolean = false,
     var noartneeded: Boolean = false,
     var aspects: MutableMap<String, Int> = mutableMapOf(),
@@ -40,6 +42,7 @@ data class Element(
     var induces_prepend: MutableList<Induces> = mutableListOf(),
     @SerialName("induces\$remove")
     var induces_remove: MutableList<String> = mutableListOf(),
+    @SerialName("decayto")
     var decayTo: String = "",
     var lifetime: Int = 0,
     var resaturate: Boolean = false,

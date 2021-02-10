@@ -85,6 +85,7 @@ data class Recipe(
     var burnimage: String = "",
     var portaleffect: String = "",
     var signalimportantloop: Boolean = false,
+    @SerialName("signalendingflavour")
     var signalEndingFlavour: String = "",
     var ending: String = "",
     var maxexecutions: Int = 0,

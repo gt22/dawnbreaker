@@ -1,9 +1,7 @@
 package dawnbreaker.data.raw
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import com.sun.xml.internal.ws.developer.Serialization
+import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import java.lang.IllegalArgumentException
 import java.nio.file.*
@@ -28,7 +26,6 @@ interface Data {
     val id: String
 
 }
-
 
 
 @Serializable
@@ -64,7 +61,7 @@ data class Source(
     fun <T : Data> lookup(id: String, from: Iterable<T>) = from.firstOrNull { it.id == id }
 
     inline fun <reified T : Data> lookup(id: String): T? {
-        val from: MutableList<T> = when(T::class) {
+        val from: MutableList<T> = when (T::class) {
             Element::class -> elements
             Recipe::class -> recipes
             Deck::class -> decks
@@ -110,15 +107,16 @@ data class Mod(
 
     fun prefix(s: String) = prefix_v + s
 
-    inline fun <reified T : Data> exists(id: String): Boolean
-            = prefix(id).let { sources.any { (_, v) -> v.exists<T>(it) } }
+    inline fun <reified T : Data> exists(id: String): Boolean =
+        prefix(id).let { sources.any { (_, v) -> v.exists<T>(it) } }
 
     inline fun <reified T : Data> find(id: String, check: Boolean = checkOnSearch): String {
         if (check) require(exists<T>(id)) { "${T::class.simpleName} '$id' was not found in mod with prefix '$prefix_v'" }
         return prefix(id)
     }
 
-    inline fun <reified T : Data> lookup(id: String): T? = sources.values.map { it.lookup<T>(id) }.firstOrNull { it != null }
+    inline fun <reified T : Data> lookup(id: String): T? =
+        sources.values.map { it.lookup<T>(id) }.firstOrNull { it != null }
 
     operator fun get(s: String) = find<Data>(s)
 
@@ -149,7 +147,7 @@ data class Mod(
     fun saveTo(p: Path) {
         val m = save()
         val num = p.resolve("serapeum_catalogue_number.txt")
-        val numv = if(Files.exists(num)) {
+        val numv = if (Files.exists(num)) {
             Files.newBufferedReader(num).use { it.readText() }
         } else ""
         p.toFile().deleteRecursively()
@@ -161,7 +159,7 @@ data class Mod(
                 it.write(json.encodeToString(source))
             }
         }
-        if(numv != "") {
+        if (numv != "") {
             Files.newBufferedWriter(num).use {
                 it.write(numv)
             }
@@ -181,18 +179,44 @@ data class Mod(
 
         fun loadVanilla(p: Path) = load(p.resolve("core"), null).apply { checkOnSearch = true }
 
-        private inline fun <reified T> read(p: Path) =
-            json.decodeFromString<T>(Files.newBufferedReader(p).use { it.readText() })
+        private fun normalizeKeys(j: JsonElement): JsonElement = when (j) {
+            is JsonObject -> {
+                JsonObject(
+                    j
+                    .mapKeys { (k, _) -> k.toLowerCase() }
+                    .mapValues { (_, v) -> normalizeKeys(v) }
+                )
+            }
+            is JsonArray -> {
+                JsonArray(j.map(::normalizeKeys))
+            }
+            else -> j
+        }
+
+        private inline fun <reified T> read(p: Path): T {
+            val text = Files.newBufferedReader(p).use { it.readText() }.replace("\uFEFF", "")
+            if (text.isEmpty()) return json.decodeFromString("{}")
+
+            return try {
+                json.decodeFromJsonElement(normalizeKeys(json.parseToJsonElement(text)))
+            } catch (e: SerializationException) {
+                System.err.println(p)
+                System.err.println(e.localizedMessage)
+                json.decodeFromString("{}")
+            }
+        }
 
         fun load(content_p: Path, synopsis_p: Path? = null) = Mod().apply {
             if (synopsis_p != null) {
-                synopsis = read<Synopsis>(synopsis_p)
+                synopsis = read(synopsis_p)
             }
             Files.walk(content_p)
                 .filter(Files::isRegularFile)
                 .forEach {
-                    val name = content_p.relativize(it).toString()
-                    sources[name] = read(it)
+                    if (!it.toString().contains("settings")) {
+                        val name = content_p.relativize(it).toString()
+                        sources[name] = read(it)
+                    }
                 }
         }
 
