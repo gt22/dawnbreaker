@@ -96,9 +96,10 @@ class ModBuilder(override val t: Mod = Mod()) : Builder<Mod> {
     var images by t::images
     var additionalfiles by t::additionalfiles
 
-    fun source(id: String, init: Init<SourceBuilder>) {
-        t.sources[id.removeSuffix(".json") + ".json"] = SourceBuilder(Source(t, id)).apply(init).t
-    }
+    fun source(id: String, init: Init<SourceBuilder>): Source =
+        t.sources.compute(id.removeSuffix(".json") + ".json") { _, s ->
+            SourceBuilder(s ?: Source(t, id)).apply(init).t
+        }!!
 
     fun find(id: String, check: Boolean = false) = t.find<Data>(id, check)
 
