@@ -1,6 +1,5 @@
 package dawnbreaker.data.raw
 
-import com.sun.xml.internal.ws.developer.Serialization
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import java.lang.IllegalArgumentException
@@ -61,7 +60,8 @@ data class Source(
     fun <T : Data> lookup(id: String, from: Iterable<T>) = from.firstOrNull { it.id == id }
 
     inline fun <reified T : Data> lookup(id: String): T? {
-        val from: MutableList<T> = when (T::class) {
+        @Suppress("UNCHECKED_CAST")
+        val from: MutableList<out T> = when (T::class) {
             Element::class -> elements
             Recipe::class -> recipes
             Deck::class -> decks
