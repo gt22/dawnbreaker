@@ -12,6 +12,7 @@ class DeckBuilder(override val t: Deck = Deck()) : Builder<Deck> {
 
     var id by t::id
     var label by t::label
+    var forlegacyfamily by t::forlegacyfamily
     var description by t::description
     var comments by t::comments
     var defaultcard by t::defaultcard

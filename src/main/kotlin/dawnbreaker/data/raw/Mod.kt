@@ -38,6 +38,8 @@ data class Source(
     var endings: MutableList<Ending> = mutableListOf(),
     var verbs: MutableList<Verb> = mutableListOf(),
     var cultures: MutableList<Culture> = mutableListOf(),
+    val dicta: MutableList<Dicta> = mutableListOf(),
+    val portals: MutableList<Portal> = mutableListOf(),
 ) : Data {
 
     fun prefix(s: String) = mod?.prefix(s) ?: s
@@ -49,11 +51,12 @@ data class Source(
         legacies,
         endings,
         verbs,
-        cultures
+        cultures,
+        dicta,
+        portals
     )
         .flatten()
         .filterIsInstance<T>()
-        .filterNotNull()
         .filter { it.id == id }
         .any()
 
@@ -69,7 +72,9 @@ data class Source(
             Ending::class -> endings
             Verb::class -> verbs
             Culture::class -> cultures
-            else -> throw IllegalArgumentException("Invalid data type for lookup")
+            Dicta::class -> dicta
+            Portal::class -> portals
+            else -> throw IllegalArgumentException("Unknown type ${T::class}")
         } as MutableList<T>
         return lookup(id, from)
     }
@@ -99,6 +104,10 @@ data class Mod(
         get() = sources.flatMap { it.value.verbs }
     val cultures: List<Culture>
         get() = sources.flatMap { it.value.cultures }
+    val dicta: List<Dicta>
+        get() = sources.flatMap { it.value.dicta }
+    val portals: List<Portal>
+        get() = sources.flatMap { it.value.portals }
 
     //End accessors
 

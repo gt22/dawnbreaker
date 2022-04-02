@@ -8,6 +8,7 @@ data class Verb(
     @Required override var id: String = "",
     var label: String = "",
     var description: String = "",
+    var icon: String = "",
     var slot: Slot? = null,
     var comments: String = "",
     var extends: MutableList<String> = mutableListOf(),

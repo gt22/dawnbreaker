@@ -44,6 +44,8 @@ data class Element(
     var induces_remove: MutableList<String> = mutableListOf(),
     @SerialName("decayto")
     var decayTo: String = "",
+    @SerialName("burnto")
+    var burnTo: String = "",
     var lifetime: Int = 0,
     var resaturate: Boolean = false,
     var unique: Boolean = false,
@@ -52,5 +54,6 @@ data class Element(
     var verbicon: String = "",
     var lever: String = "",
     var extends: MutableList<String> = mutableListOf(),
-    var deleted: Boolean = false
+    var deleted: Boolean = false,
+    var metafictional: Boolean = false
 ) : Data

@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class Legacy(
     @Required override var id: String = "",
     var label: String = "",
+    var family: String = "",
     var description: String = "",
     var startdescription: String = "",
     var image: String = "",

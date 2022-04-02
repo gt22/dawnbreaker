@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class Deck(
     override var id: String = "",
     var label: String = "",
+    var forlegacyfamily: String = "",
     var description: String = "",
     var comments: String = "",
     var defaultcard: String = "",

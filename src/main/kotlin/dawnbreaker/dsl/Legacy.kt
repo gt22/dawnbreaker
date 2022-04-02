@@ -9,6 +9,7 @@ class LegacyBuilder(override val t: Legacy = Legacy()) : Builder<Legacy> {
 
     var id by t::id
     var label by t::label
+    var family by t::family
     var description by t::description
     var startdescription by t::startdescription
     var image by t::image

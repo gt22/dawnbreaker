@@ -27,6 +27,7 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     val induces by lprop(t.induces, t.induces_append, t.induces_prepend, t.induces_remove)
 
     var decayTo by t::decayTo
+    var burnTo by t::burnTo
     var lifetime by t::lifetime
     var resaturate by t::resaturate
     var unique by t::unique
@@ -36,5 +37,6 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     var lever by t::lever
     var extends by t::extends
     var deleted by t::deleted
+    var metafictional by t::metafictional
     
 }

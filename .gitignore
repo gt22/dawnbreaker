@@ -2,4 +2,6 @@
 .idea
 gradle
 build
-content_norm
+content*
+gradlew*
+out
