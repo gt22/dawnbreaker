@@ -129,32 +129,17 @@ data class Mod(
 
     operator fun get(s: String) = find<Data>(s)
 
-    private fun cleanup(json: JsonElement): JsonElement = with(json) {
-        when (this) {
-            is JsonPrimitive -> {
-                return try {
-                    JsonPrimitive(content.toInt())
-                } catch (e: NumberFormatException) {
-                    this
-                }
-            }
-            is JsonObject -> JsonObject(mapValues { (_, v) -> cleanup(v) })
-            is JsonArray -> JsonArray(map(::cleanup))
-            else -> return this
-        }
-    }
-
-    fun save(): Map<String, JsonElement> {
+    fun save(saveAsCore: Boolean = false): Map<String, JsonElement> {
         val m = mutableMapOf<String, JsonElement>()
         m["synopsis.json"] = cleanup(Json.encodeToJsonElement(synopsis))
         for ((path, source) in sources) {
-            m["content/$path"] = cleanup(Json.encodeToJsonElement(source))
+            m["${if(saveAsCore) "core" else "content"}/$path"] = cleanup(Json.encodeToJsonElement(source))
         }
         return m
     }
 
-    fun saveTo(p: Path) {
-        val m = save()
+    fun saveTo(p: Path, saveAsCore: Boolean = false) {
+        val m = save(saveAsCore)
         val num = p.resolve("serapeum_catalogue_number.txt")
         val numv = if (Files.exists(num)) {
             Files.newBufferedReader(num).use { it.readText() }
@@ -179,7 +164,7 @@ data class Mod(
 
     companion object {
 
-        val json = Json {
+        private val json = Json {
             isLenient = true
             prettyPrint = true
         }
@@ -188,7 +173,22 @@ data class Mod(
 
         fun loadVanilla(p: Path) = load(p.resolve("core"), null).apply { checkOnSearch = true }
 
-        private fun normalizeKeys(j: JsonElement): JsonElement = when (j) {
+        fun cleanup(json: JsonElement): JsonElement = with(json) {
+            when (this) {
+                is JsonPrimitive -> {
+                    return try {
+                        JsonPrimitive(content.toInt())
+                    } catch (e: NumberFormatException) {
+                        this
+                    }
+                }
+                is JsonObject -> JsonObject(mapValues { (_, v) -> cleanup(v) })
+                is JsonArray -> JsonArray(map(::cleanup))
+                else -> return this
+            }
+        }
+
+        fun normalizeKeys(j: JsonElement): JsonElement = when (j) {
             is JsonObject -> {
                 JsonObject(
                     j
