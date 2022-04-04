@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
-    kotlin("jvm") version "1.4.20"
-    kotlin("plugin.serialization") version "1.4.20"
+    kotlin("jvm") version "1.6.20"
+    kotlin("plugin.serialization") version "1.6.20"
     `maven-publish`
 }
 
@@ -20,15 +20,29 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<JavaCompile> {
     sourceCompatibility = "1.8"
     targetCompatibility = "1.8"
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
     from(kotlin.sourceSets["main"].kotlin)
 }
+
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+
 
 publishing {
     repositories {
