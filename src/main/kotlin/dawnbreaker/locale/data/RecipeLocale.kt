@@ -13,8 +13,9 @@ data class RecipeLocale(
     var startdescription: String = "",
     var description: String = "",
     var slots: MutableList<SlotLocale> = mutableListOf(),
-    val linked: MutableList<RecipeLocale> = mutableListOf(),
-    val alt: MutableList<RecipeLocale> = mutableListOf()
+    var linked: MutableList<RecipeLocale> = mutableListOf(),
+    var alt: MutableList<RecipeLocale> = mutableListOf(),
+    var internaldeck: DeckLocale? = null
 ) : LocaleData<Recipe> {
     override fun register(base: Recipe, data: MutableMap<Data, LocaleData<*>>) {
         super.register(base, data)
@@ -35,6 +36,12 @@ data class RecipeLocale(
                 throw IllegalStateException("Alternative recipe id mismatch")
             }
             recipe.register(baseRecipe, data)
+        }
+        if(internaldeck != null) {
+            if(base.internaldeck == null) {
+                throw IllegalStateException("Internal deck mismatch")
+            }
+            internaldeck!!.register(base.internaldeck!!, data)
         }
     }
 }
