@@ -99,9 +99,9 @@ class Locale(val name: String) {
                 .filter(Files::isRegularFile)
                 .forEach {
                     if (!it.toString().contains("settings")) {
-                        val name = content_p.relativize(it).toString()
+                        val s = content_p.relativize(it).toString()
                         val source = read<LocaleSource>(it)
-                        sources[name] = source
+                        sources[s] = source
                         register(base, source.elements)
                         register(base, source.recipes)
                         register(base, source.decks)

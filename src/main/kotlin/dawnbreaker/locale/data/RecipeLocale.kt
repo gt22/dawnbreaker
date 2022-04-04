@@ -13,6 +13,8 @@ data class RecipeLocale(
     var startdescription: String = "",
     var description: String = "",
     var slots: MutableList<SlotLocale> = mutableListOf(),
+    val linked: MutableList<RecipeLocale> = mutableListOf(),
+    val alt: MutableList<RecipeLocale> = mutableListOf()
 ) : LocaleData<Recipe> {
     override fun register(base: Recipe, data: MutableMap<Data, LocaleData<*>>) {
         super.register(base, data)
@@ -21,6 +23,18 @@ data class RecipeLocale(
                 throw IllegalStateException("Slot id mismatch")
             }
             slot.register(baseSlot, data)
+        }
+        linked.zip(base.linked).forEach { (recipe, baseRecipe) ->
+            if(recipe.id != baseRecipe.id) {
+                throw IllegalStateException("Linked recipe id mismatch")
+            }
+            recipe.register(baseRecipe, data)
+        }
+        alt.zip(base.alt).forEach { (recipe, baseRecipe) ->
+            if(recipe.id != baseRecipe.id) {
+                throw IllegalStateException("Alternative recipe id mismatch")
+            }
+            recipe.register(baseRecipe, data)
         }
     }
 }
