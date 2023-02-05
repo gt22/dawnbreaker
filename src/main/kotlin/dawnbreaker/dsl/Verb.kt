@@ -1,10 +1,7 @@
 package dawnbreaker.dsl
 
 import dawnbreaker.data.raw.Verb
-import dawnbreaker.dsl.internal.Builder
-import dawnbreaker.dsl.internal.ModDsl
-import dawnbreaker.dsl.internal.builder
-import dawnbreaker.dsl.internal.mprop
+import dawnbreaker.dsl.internal.*
 
 @ModDsl
 class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
@@ -12,8 +9,10 @@ class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
     var id by t::id
     var label by t::label
     var description by t::description
+    var category by t::category
+    val aspects by mprop(t.aspects, t.aspects_add, t.aspects_remove)
     var icon by t::icon
-    val slot by builder(t::slot, ::SlotBuilder)
+    val slots by lprop(t.slots, t.slots_append, t.slots_prepend, t.slots_remove)
 
     var comments by t::comments
     var extends by t::extends

@@ -11,15 +11,15 @@ data class VerbLocale(
     @Required override var id: String = "",
     var label: String = "",
     var description: String = "",
-    var slot: SlotLocale? = null
+    var slot: SlotLocale? = null,
+    var slots: MutableList<SlotLocale> = mutableListOf()
 ) : LocaleData<Verb> {
     override fun register(base: Verb, data: MutableMap<Data, LocaleData<*>>) {
         super.register(base, data)
-        if(slot != null) {
-            if(base.slot == null) {
-                throw IllegalStateException("Localization for missing slot")
-            }
-            data[base.slot!!] = slot!!
+        slot?.let { slots.add(0, it) }
+        if(slots.size != base.slots.size) {
+            throw IllegalStateException("Invalid slot localization")
         }
+        slots.zip(base.slots).forEach { (l, b) -> data[b] = l }
     }
 }
