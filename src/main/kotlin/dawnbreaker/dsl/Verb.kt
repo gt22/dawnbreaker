@@ -4,6 +4,7 @@ import dawnbreaker.data.raw.Verb
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 import dawnbreaker.dsl.internal.builder
+import dawnbreaker.dsl.internal.mprop
 
 @ModDsl
 class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
@@ -17,5 +18,6 @@ class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
     var comments by t::comments
     var extends by t::extends
     var deleted by t::deleted
-    
+
+    val xtriggers by mprop(t.xtriggers, t.xtriggers_add, t.xtriggers_remove)
 }

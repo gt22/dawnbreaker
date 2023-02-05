@@ -12,6 +12,7 @@ data class Slot(
     var consumes: Boolean = false,
     var greedy: Boolean = false,
     var noanim: Boolean = false,
+    var essential: MutableMap<String, Int> = mutableMapOf(),
     var required: MutableMap<String, Int> = mutableMapOf(),
     var forbidden: MutableMap<String, Int> = mutableMapOf(),
     var ifaspectspresent: MutableMap<String, Int> = mutableMapOf()

@@ -39,4 +39,5 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     var deleted by t::deleted
     var metafictional by t::metafictional
     var commute by t::commute
+    var manifestationtype by t::manifestationtype
 }
