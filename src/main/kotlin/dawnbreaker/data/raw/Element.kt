@@ -55,5 +55,7 @@ data class Element(
     var lever: String = "",
     var extends: MutableList<String> = mutableListOf(),
     var deleted: Boolean = false,
-    var metafictional: Boolean = false
+    var metafictional: Boolean = false,
+    var commute: MutableList<String> = mutableListOf(),
+    var manifestationtype: String = ""
 ) : Data

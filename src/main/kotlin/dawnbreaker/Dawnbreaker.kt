@@ -17,14 +17,15 @@ fun loadVanilla(from: Path) {
 
 
 fun main() {
-    loadVanilla(Paths.get("content"))
-    vanilla.saveTo(Paths.get("content_norm"), saveAsCore = true)
-    Locale.load("en", vanilla, Paths.get("content/core"))
-        .saveTo(Paths.get("content_norm"))
-    Files.list(Paths.get("content"))
+    val base = "content_boh"
+    loadVanilla(Paths.get(base))
+    vanilla.saveTo(Paths.get("${base}_norm"), saveAsCore = true)
+    Locale.load("en", vanilla, Paths.get("$base/core"))
+        .saveTo(Paths.get("${base}_norm"))
+    Files.list(Paths.get(base))
         .filter { it.fileName.toString().startsWith("loc_") }
         .forEach {
             Locale.load(it.fileName.toString().removePrefix("loc_"), vanilla, it)
-                .saveTo(Paths.get("content_norm"))
+                .saveTo(Paths.get("${base}_norm"))
         }
 }

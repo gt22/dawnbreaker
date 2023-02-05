@@ -38,5 +38,5 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     var extends by t::extends
     var deleted by t::deleted
     var metafictional by t::metafictional
-    
+    var commute by t::commute
 }

@@ -78,6 +78,14 @@ data class Source(
         } as MutableList<T>
         return lookup(id, from)
     }
+
+    fun postprocess() {
+
+    }
+
+    private fun internalRecipes() {
+
+    }
 }
 
 data class Mod(
