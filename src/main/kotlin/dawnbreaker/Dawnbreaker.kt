@@ -17,7 +17,7 @@ fun loadVanilla(from: Path) {
 
 
 fun main() {
-    val base = "content_boh"
+    val base = "bhcontent"
     loadVanilla(Paths.get(base))
     vanilla.saveTo(Paths.get("${base}_norm"), saveAsCore = true)
     Locale.load("en", vanilla, Paths.get("$base/core"))

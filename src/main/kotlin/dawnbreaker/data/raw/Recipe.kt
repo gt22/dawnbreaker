@@ -25,9 +25,9 @@ data class Recipe(
     var aspects_add: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("aspects\$remove")
     var aspects_remove: MutableList<String> = mutableListOf(),
-    var deckeffects: MutableMap<String, Int> = mutableMapOf(),
+    var deckeffects: MutableMap<String, String> = mutableMapOf(),
     @SerialName("deckeffects\$add")
-    var deckeffects_add: MutableMap<String, Int> = mutableMapOf(),
+    var deckeffects_add: MutableMap<String, String> = mutableMapOf(),
     @SerialName("deckeffects\$remove")
     var deckeffects_remove: MutableList<String> = mutableListOf(),
     var requirements: MutableMap<String, String> = mutableMapOf(),
@@ -92,10 +92,13 @@ data class Recipe(
     var comments: String = "",
     var deleted: Boolean = false,
     var extends: MutableList<String> = mutableListOf(),
-
+    var fx: MutableMap<String, Int> = mutableMapOf(),
+    var xpans: MutableMap<String, Int> = mutableMapOf(),
+    var notable: Boolean = false,
     //for linked & alt only
     var chance: Int = 0,
     var additional: Boolean = false,
     var expulsion: Expulsion? = null,
-    var challenges: MutableMap<String, String> = mutableMapOf()
+    var challenges: MutableMap<String, String> = mutableMapOf(),
+    var topath: String = ""
 ) : Data

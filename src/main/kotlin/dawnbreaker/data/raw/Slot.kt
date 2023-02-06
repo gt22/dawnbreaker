@@ -15,5 +15,6 @@ data class Slot(
     var essential: MutableMap<String, Int> = mutableMapOf(),
     var required: MutableMap<String, Int> = mutableMapOf(),
     var forbidden: MutableMap<String, Int> = mutableMapOf(),
-    var ifaspectspresent: MutableMap<String, Int> = mutableMapOf()
+    var ifaspectspresent: MutableMap<String, Int> = mutableMapOf(),
+    var frompath: String = ""
 ) : Data

@@ -3,6 +3,7 @@ package dawnbreaker.data.raw
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
 @Serializable
 data class Legacy(
@@ -40,5 +41,6 @@ data class Legacy(
     var tablesurfaceimage: String = "",
     var tableedgeimage: String = "",
     var extends: MutableList<String> = mutableListOf(),
-    var deleted: Boolean = false
+    var deleted: Boolean = false,
+    var startup: MutableList<JsonObject> = mutableListOf() //TODO: Proper decoding
 ) : Data

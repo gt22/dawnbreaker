@@ -17,6 +17,7 @@ data class VerbLocale(
     override fun register(base: Verb, data: MutableMap<Data, LocaleData<*>>) {
         super.register(base, data)
         slot?.let { slots.add(0, it) }
+        slot = null
         if(slots.size != base.slots.size) {
             throw IllegalStateException("Invalid slot localization")
         }

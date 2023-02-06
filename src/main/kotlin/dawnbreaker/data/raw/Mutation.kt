@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class Mutation(
     var filter: String = "",
     var mutate: String = "",
-    var level: Int = 0,
+    var level: String = "",
     var additive: Boolean = false
 )

@@ -9,6 +9,10 @@ data class Dicta(
     @Required override var id: String = "",
     @SerialName("worldspheretype")
     var worldSphereType: String = "",
+    @SerialName("alternativedefaultworldspherepaths")
+    var alternativeDefaultWorldSpherePaths: MutableList<String> = mutableListOf(),
+    @SerialName("defaultcardback")
+    var defaultCardBack: String = "",
     @SerialName("defaultworldspherepath")
     var defaultWorldSpherePath: String = "",
     @SerialName("masterscene")
@@ -31,4 +35,8 @@ data class Dicta(
     var defaultTravelDuration: String = "",
     @SerialName("defaultquicktravelduration")
     var defaultQuickTravelDuration: String = "",
+    @SerialName("defaultlongtravelduration")
+    var defaultLongTravelDuration: String = "",
+    @SerialName("defaultgamespeed")
+    var defaultGameSpeed: String = ""
 ) : Data

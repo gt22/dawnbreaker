@@ -44,6 +44,20 @@ data class Source(
 
     fun prefix(s: String) = mod?.prefix(s) ?: s
 
+
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T : Data> getSource(): MutableList<T> = when (T::class) {
+        Element::class -> elements
+        Recipe::class -> recipes
+        Deck::class -> decks
+        Legacy::class -> legacies
+        Ending::class -> endings
+        Verb::class -> verbs
+        Culture::class -> cultures
+        Dicta::class -> dicta
+        Portal::class -> portals
+        else -> throw IllegalArgumentException("Unknown type ${T::class}")
+    } as MutableList<T>
     inline fun <reified T : Data> exists(id: String): Boolean = sequenceOf(
         elements,
         recipes,
@@ -62,23 +76,18 @@ data class Source(
 
     fun <T : Data> lookup(id: String, from: Iterable<T>) = from.firstOrNull { it.id == id }
 
-    inline fun <reified T : Data> lookup(id: String): T? {
-        @Suppress("UNCHECKED_CAST")
-        val from: MutableList<out T> = when (T::class) {
-            Element::class -> elements
-            Recipe::class -> recipes
-            Deck::class -> decks
-            Legacy::class -> legacies
-            Ending::class -> endings
-            Verb::class -> verbs
-            Culture::class -> cultures
-            Dicta::class -> dicta
-            Portal::class -> portals
-            else -> throw IllegalArgumentException("Unknown type ${T::class}")
-        } as MutableList<T>
-        return lookup(id, from)
-    }
+    fun <T : Data> lookupWildcard(id: String, from: Iterable<T>) = from.filter {
+        if(it.id == id) {
+            true
+        } else if (id.endsWith('*')) {
+            it.id.startsWith(id.substring(0, id.length - 1))
+        } else {
+            false
+        }
+    }.toList()
+    inline fun <reified T : Data> lookup(id: String): T? = lookup(id, getSource())
 
+    inline fun <reified T : Data> lookupWildcard(id: String): List<T> = lookupWildcard(id, getSource())
     fun postprocess() {
 
     }
@@ -135,6 +144,7 @@ data class Mod(
     inline fun <reified T : Data> lookup(id: String): T? =
         sources.values.map { it.lookup<T>(id) }.firstOrNull { it != null }
 
+    inline fun <reified T : Data> lookupWildcard(id: String): List<T> = sources.values.flatMap { it.lookupWildcard(id) }
     operator fun get(s: String) = find<Data>(s)
 
     fun save(saveAsCore: Boolean = false): Map<String, JsonElement> {
@@ -200,7 +210,7 @@ data class Mod(
             is JsonObject -> {
                 JsonObject(
                     j
-                    .mapKeys { (k, _) -> k.toLowerCase() }
+                    .mapKeys { (k, _) -> k.lowercase() }
                     .mapValues { (_, v) -> normalizeKeys(v) }
                 )
             }
