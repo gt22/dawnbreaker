@@ -11,6 +11,7 @@ data class ElementLocale(
     @Required override var id: String = "",
     var label: String = "",
     var description: String = "",
+    var xexts: MutableMap<String, String> = mutableMapOf(),
     var slots: MutableList<SlotLocale> = mutableListOf()
 ) : LocaleData<Element> {
     override fun register(base: Element, data: MutableMap<Data, LocaleData<*>>) {

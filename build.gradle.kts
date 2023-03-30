@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.frgm"
-version = "0.1.7.0"
+version = "0.1.7.1"
 
 
 repositories {
