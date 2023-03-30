@@ -12,6 +12,8 @@ class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
     var category by t::category
     val aspects by mprop(t.aspects, t.aspects_add, t.aspects_remove)
     var icon by t::icon
+    var spontaneous by t::spontaneous
+    var multiple by t::multiple
     val slots by lprop(t.slots, t.slots_append, t.slots_prepend, t.slots_remove)
 
     var comments by t::comments

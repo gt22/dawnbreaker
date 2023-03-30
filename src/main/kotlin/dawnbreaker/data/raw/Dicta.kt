@@ -38,5 +38,9 @@ data class Dicta(
     @SerialName("defaultlongtravelduration")
     var defaultLongTravelDuration: String = "",
     @SerialName("defaultgamespeed")
-    var defaultGameSpeed: String = ""
+    var defaultGameSpeed: String = "",
+    @SerialName("storedmanifestation")
+    var storedManifestation: String = "",
+    @SerialName("storedphyicalmanifestation")
+    var storedPhysicalManifestation: String = ""
 ) : Data

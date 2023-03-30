@@ -23,6 +23,7 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     val slots by lprop(t.slots, t.slots_append, t.slots_prepend, t.slots_remove)
 
     val xtriggers by mprop(t.xtriggers, t.xtriggers_add, t.xtriggers_remove)
+    val xexts by mprop(t.xexts, t.xexts_add, t.xexts_remove)
 
     val induces by lprop(t.induces, t.induces_append, t.induces_prepend, t.induces_remove)
 

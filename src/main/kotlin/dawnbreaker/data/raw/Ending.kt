@@ -12,5 +12,6 @@ data class Ending(
     var flavour: String = "",
     var anim: String = "",
     var achievement: String = "",
+    var achievements: MutableList<String> = mutableListOf(),
     var comments: String = ""
 ) : Data

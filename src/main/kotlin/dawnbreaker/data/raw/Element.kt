@@ -35,6 +35,11 @@ data class Element(
     var xtriggers_add: MutableMap<String, MutableList<XTrigger>> = mutableMapOf(),
     @SerialName("xtriggers\$remove")
     var xtriggers_remove: MutableList<String> = mutableListOf(),
+    var xexts: MutableMap<String, String> = mutableMapOf(),
+    @SerialName("xexts\$add")
+    var xexts_add: MutableMap<String, String> = mutableMapOf(),
+    @SerialName("xexts\$remove")
+    var xexts_remove: MutableList<String> = mutableListOf(),
     var induces: MutableList<Induces> = mutableListOf(),
     @SerialName("induces\$append")
     var induces_append: MutableList<Induces> = mutableListOf(),

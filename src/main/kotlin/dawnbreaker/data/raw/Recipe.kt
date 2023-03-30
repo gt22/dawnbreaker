@@ -91,9 +91,11 @@ data class Recipe(
     var maxexecutions: Int = 0,
     var comments: String = "",
     var deleted: Boolean = false,
+    var inherits: String = "",
     var extends: MutableList<String> = mutableListOf(),
     var fx: MutableMap<String, Int> = mutableMapOf(),
     var xpans: MutableMap<String, Int> = mutableMapOf(),
+    var outputpath: String = "",
     var notable: Boolean = false,
     //for linked & alt only
     var chance: Int = 0,

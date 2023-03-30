@@ -12,6 +12,7 @@ data class Verb(
     var category: String = "",
     var icon: String = "",
     var spontaneous: Boolean = false,
+    var multiple: Boolean = false,
     private var slot: Slot? = null,
     var slots: MutableList<Slot> = mutableListOf(),
     @SerialName("slots\$append")

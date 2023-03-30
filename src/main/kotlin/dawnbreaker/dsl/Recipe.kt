@@ -45,6 +45,7 @@ class RecipeBuilder(override val t: Recipe = Recipe()) : Builder<Recipe> {
     var comments by t::comments
     var deleted by t::deleted
     var extends by t::extends
+    var inherits by t::inherits
 
     //for linked & alt only
     var chance by t::chance
