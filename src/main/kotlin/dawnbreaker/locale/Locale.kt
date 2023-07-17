@@ -98,7 +98,7 @@ class Locale(val name: String) {
             Files.walk(content_p)
                 .filter(Files::isRegularFile)
                 .forEach {
-                    if (!it.toString().contains("settings")) {
+                    if (it.toString().endsWith(".json") && !it.toString().contains("settings")) {
                         val s = content_p.relativize(it).toString()
                         val source = read<LocaleSource>(it)
                         sources[s] = source

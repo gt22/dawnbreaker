@@ -41,4 +41,5 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     var metafictional by t::metafictional
     var commute by t::commute
     var manifestationtype by t::manifestationtype
+    var audio by t::audio
 }

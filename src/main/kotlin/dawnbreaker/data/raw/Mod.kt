@@ -38,8 +38,9 @@ data class Source(
     var endings: MutableList<Ending> = mutableListOf(),
     var verbs: MutableList<Verb> = mutableListOf(),
     var cultures: MutableList<Culture> = mutableListOf(),
-    val dicta: MutableList<Dicta> = mutableListOf(),
-    val portals: MutableList<Portal> = mutableListOf(),
+    var dicta: MutableList<Dicta> = mutableListOf(),
+    var portals: MutableList<Portal> = mutableListOf(),
+    var achievements: MutableList<Achievement> = mutableListOf()
 ) : Data {
 
     fun prefix(s: String) = mod?.prefix(s) ?: s
@@ -88,6 +89,11 @@ data class Source(
     inline fun <reified T : Data> lookup(id: String): T? = lookup(id, getSource())
 
     inline fun <reified T : Data> lookupWildcard(id: String): List<T> = lookupWildcard(id, getSource())
+
+    fun applyInherits(m: Mod) {
+        elements.forEach { it.inherit(m) }
+        recipes.forEach { it.inherit(m) }
+    }
     fun postprocess() {
 
     }
@@ -180,6 +186,10 @@ data class Mod(
         additionalfiles?.let { copyFolder(it, p) }
     }
 
+    fun applyInherits() {
+        sources.values.forEach { it.applyInherits(this) }
+    }
+
     companion object {
 
         private val json = Json {
@@ -240,7 +250,7 @@ data class Mod(
             Files.walk(content_p)
                 .filter(Files::isRegularFile)
                 .forEach {
-                    if (!it.toString().contains("settings")) {
+                    if (it.toString().endsWith(".json") && !it.toString().contains("settings")) {
                         val name = content_p.relativize(it).toString()
                         sources[name] = read(it)
                     }

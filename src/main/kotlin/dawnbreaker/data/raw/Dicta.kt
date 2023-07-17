@@ -42,5 +42,7 @@ data class Dicta(
     @SerialName("storedmanifestation")
     var storedManifestation: String = "",
     @SerialName("storedphyicalmanifestation")
-    var storedPhysicalManifestation: String = ""
+    var storedPhysicalManifestation: String = "",
+    @SerialName("maxsuitabilitypulsefrequency")
+    var maxSuitabilityPulseFrequency: String = ""
 ) : Data

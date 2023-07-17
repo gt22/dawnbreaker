@@ -21,4 +21,5 @@ class VerbBuilder(override val t: Verb = Verb()) : Builder<Verb> {
     var deleted by t::deleted
 
     val xtriggers by mprop(t.xtriggers, t.xtriggers_add, t.xtriggers_remove)
+    var audio by t::audio
 }

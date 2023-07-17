@@ -93,14 +93,56 @@ data class Recipe(
     var deleted: Boolean = false,
     var inherits: String = "",
     var extends: MutableList<String> = mutableListOf(),
-    var fx: MutableMap<String, Int> = mutableMapOf(),
+    var fx: MutableMap<String, String> = mutableMapOf(),
     var xpans: MutableMap<String, Int> = mutableMapOf(),
     var outputpath: String = "",
     var notable: Boolean = false,
+    var audiooneshot: String = "",
+    var achievements: MutableList<String> = mutableListOf(),
     //for linked & alt only
     var chance: Int = 0,
     var additional: Boolean = false,
     var expulsion: Expulsion? = null,
     var challenges: MutableMap<String, String> = mutableMapOf(),
-    var topath: String = ""
-) : Data
+    var topath: String = "",
+) : Data {
+
+    private var inherited = false;
+
+    fun inherit(m: Mod) {
+        if(inherited) return
+        inherited = true
+        if(inherits.isEmpty()) return
+        val parent = m.lookup<Recipe>(inherits) ?: return
+        parent.inherit(m)
+
+        requirements += parent.requirements
+        tablereqs += parent.tablereqs
+        extantreqs += parent.extantreqs
+        effects += parent.effects
+        xpans += parent.xpans
+        fx += parent.fx
+        purge += parent.purge
+        haltverb += parent.haltverb
+        deleteverb += parent.deleteverb
+        deckeffects += parent.deckeffects
+        slots += parent.slots
+        alt += parent.alt
+        linked += parent.linked
+        aspects += parent.aspects
+        mutations += parent.mutations
+        if(warmup <= 0 && parent.warmup > 0) warmup = parent.warmup
+        if(parent.signalimportantloop) signalimportantloop = true
+        if(parent.craftable) craftable = true
+        if(parent.hintonly) hintonly = true
+        if(parent.notable) notable = true
+        if(actionid.isEmpty()) actionid = parent.actionid
+        if(label.length < 2) label = parent.label
+        if(startdescription.length < 2) startdescription = parent.startdescription
+        if(description.length < 2) description = parent.description
+        if(ending.isEmpty()) ending = parent.ending
+        if(burnimage.isEmpty()) burnimage = parent.burnimage
+        if(portaleffect.isEmpty()) portaleffect = parent.portaleffect
+    }
+
+}
