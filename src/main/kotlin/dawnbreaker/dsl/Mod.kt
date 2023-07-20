@@ -74,6 +74,15 @@ class SourceBuilder(val t: Source = Source()) {
             this@SourceBuilder.build(this, id, init, ::CultureBuilder, ::Culture)
     }
 
+    inner class AchievementsBuilder(l: MutableList<Achievement>) : ListBuilder<Achievement>(l) {
+
+        fun achievement(id: String, init: Init<AchievementBuilder>) =
+            this@SourceBuilder.build(this, id, init, ::AchievementBuilder, ::Achievement)
+
+        fun category(id: String, init: Init<AchievementBuilder>) =
+            this@SourceBuilder.build(this, id, { isCategory = true; init() }, ::AchievementBuilder, ::Achievement)
+    }
+
     fun elements(init: Init<ElementsBuilder>) = ElementsBuilder(t.elements).apply(init)
     fun aspects(init: Init<AspectsBuilder>) = AspectsBuilder(t.elements).apply(init)
     fun recipes(init: Init<RecipesBuilder>) = RecipesBuilder(t.recipes).apply(init)
@@ -82,6 +91,8 @@ class SourceBuilder(val t: Source = Source()) {
     fun endings(init: Init<EndingsBuilder>) = EndingsBuilder(t.endings).apply(init)
     fun verbs(init: Init<VerbsBuilder>) = VerbsBuilder(t.verbs).apply(init)
     fun cultures(init: Init<CulturesBuilder>) = CulturesBuilder(t.cultures).apply(init)
+
+    fun achievements(init: Init<AchievementsBuilder>) = AchievementsBuilder(t.achievements).apply(init)
 }
 
 

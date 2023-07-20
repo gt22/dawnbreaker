@@ -57,6 +57,7 @@ data class Source(
         Culture::class -> cultures
         Dicta::class -> dicta
         Portal::class -> portals
+        Achievement::class -> achievements
         else -> throw IllegalArgumentException("Unknown type ${T::class}")
     } as MutableList<T>
     inline fun <reified T : Data> exists(id: String): Boolean = sequenceOf(
@@ -68,7 +69,8 @@ data class Source(
         verbs,
         cultures,
         dicta,
-        portals
+        portals,
+        achievements
     )
         .flatten()
         .filterIsInstance<T>()

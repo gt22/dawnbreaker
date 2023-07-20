@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Achievement(
-    @Required override var id: String,
+    @Required override var id: String = "",
     @SerialName("iscategory")
     var isCategory: Boolean = false,
     var label: String = "",
