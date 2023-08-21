@@ -38,7 +38,8 @@ data class Verb(
     var xtriggers_remove: MutableList<String> = mutableListOf(),
     var audio: String = "",
     @SerialName("maxnotes")
-    var maxNotes: Int = 0
+    var maxNotes: Int = 0,
+    var hints: MutableList<String> = mutableListOf()
 ) : Data {
     init {
         slot?.let { slots.add(0, it) }

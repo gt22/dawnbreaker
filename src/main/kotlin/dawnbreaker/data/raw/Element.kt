@@ -52,7 +52,7 @@ data class Element(
     @SerialName("burnto")
     var burnTo: String = "",
     var sort: String = "",
-    var lifetime: Int = 0,
+    var lifetime: Double = .0,
     var resaturate: Boolean = false,
     var unique: Boolean = false,
     var uniquenessgroup: String = "",

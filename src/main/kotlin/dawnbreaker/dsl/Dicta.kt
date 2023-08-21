@@ -17,6 +17,7 @@ class DictaBuilder(override val t: Dicta = Dicta()) : Builder<Dicta> {
     var playfieldScene by t::playfieldScene
     var gameOverScene by t::gameOverScene
     var newGameScene by t::newGameScene
+    var loadingScene by t::loadingScene
     var noteElementId by t::noteElementId
     var defaultTravelDuration by t::defaultTravelDuration
     var defaultQuickTravelDuration by t::defaultQuickTravelDuration

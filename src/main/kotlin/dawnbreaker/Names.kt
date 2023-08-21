@@ -6,6 +6,7 @@ val base_principles = listOf("lantern", "forge", "edge", "winter", "heart", "gra
 val principles = listOf("lantern", "forge", "edge", "winter", "heart", "grail", "moth", "knock")
 val base_principles_sh = listOf("lantern", "forge", "edge", "winter", "heart", "grail", "moth", "secrethistories")
 val principles_sh = listOf("lantern", "forge", "edge", "winter", "heart", "grail", "moth", "knock", "secrethistories")
+val powers = listOf("lantern", "forge", "edge", "winter", "heart", "grail", "moth", "knock", "rose", "sky", "moon", "scale", "nectar")
 
 fun subvertedBy(p: String): String {
     val i = base_principles.indexOf(p)

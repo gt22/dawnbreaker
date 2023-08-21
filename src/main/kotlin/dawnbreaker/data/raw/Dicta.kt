@@ -25,6 +25,8 @@ data class Dicta(
     var menuScene: String = "",
     @SerialName("playfieldscene")
     var playfieldScene: String = "",
+    @SerialName("loadingscene")
+    var loadingScene: String = "",
     @SerialName("gameoverscene")
     var gameOverScene: String = "",
     @SerialName("newgamescene")
