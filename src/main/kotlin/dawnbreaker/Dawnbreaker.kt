@@ -10,6 +10,9 @@ import java.nio.file.*
 
 lateinit var vanilla: Mod
 
+const val descriptionName = "desc"
+const val requirementsName = "reqs"
+
 
 fun loadVanilla(from: Path) {
     vanilla = Mod.loadVanilla(from)

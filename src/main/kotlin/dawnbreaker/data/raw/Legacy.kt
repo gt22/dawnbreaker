@@ -1,8 +1,10 @@
 package dawnbreaker.data.raw
 
+import dawnbreaker.descriptionName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
@@ -10,6 +12,7 @@ data class Legacy(
     @Required override var id: String = "",
     var label: String = "",
     var family: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var startdescription: String = "",
     var image: String = "",

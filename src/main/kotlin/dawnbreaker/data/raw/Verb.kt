@@ -1,13 +1,16 @@
 package dawnbreaker.data.raw
 
+import dawnbreaker.descriptionName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Verb(
     @Required override var id: String = "",
     var label: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var category: String = "",
     var icon: String = "",

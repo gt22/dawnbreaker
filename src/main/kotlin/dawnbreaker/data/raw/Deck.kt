@@ -1,13 +1,16 @@
 package dawnbreaker.data.raw
 
+import dawnbreaker.descriptionName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Deck(
     override var id: String = "",
     var label: String = "",
     var forlegacyfamily: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var comments: String = "",
     var defaultcard: String = "",

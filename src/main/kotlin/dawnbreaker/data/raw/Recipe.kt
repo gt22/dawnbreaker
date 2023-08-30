@@ -1,8 +1,11 @@
 package dawnbreaker.data.raw
 
+import dawnbreaker.descriptionName
+import dawnbreaker.requirementsName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Recipe(
@@ -10,6 +13,7 @@ data class Recipe(
     var label: String = "",
     var actionid: String = "",
     var startdescription: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var warmup: Int = 0,
     var craftable: Boolean = false,
@@ -30,10 +34,11 @@ data class Recipe(
     var deckeffects_add: MutableMap<String, String> = mutableMapOf(),
     @SerialName("deckeffects\$remove")
     var deckeffects_remove: MutableList<String> = mutableListOf(),
+    @SerialName(requirementsName)
     var requirements: MutableMap<String, String> = mutableMapOf(),
-    @SerialName("requirements\$add")
+    @SerialName("${requirementsName}\$add")
     var requirements_add: MutableMap<String, String> = mutableMapOf(),
-    @SerialName("requirements\$remove")
+    @SerialName("${requirementsName}\$remove")
     var requirements_remove: MutableList<String> = mutableListOf(),
     var extantreqs: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("extantreqs\$add")
