@@ -2,14 +2,17 @@ package dawnbreaker.locale.data
 
 import dawnbreaker.data.raw.Data
 import dawnbreaker.data.raw.Verb
+import dawnbreaker.descriptionName
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class VerbLocale(
     @Required override var id: String = "",
     var label: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var slot: SlotLocale? = null,
     var slots: MutableList<SlotLocale> = mutableListOf()

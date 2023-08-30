@@ -2,8 +2,10 @@ package dawnbreaker.locale.data
 
 import dawnbreaker.data.raw.Data
 import dawnbreaker.data.raw.Recipe
+import dawnbreaker.descriptionName
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,6 +13,7 @@ data class RecipeLocale(
     @Required override var id: String = "",
     var label: String = "",
     var startdescription: String = "",
+    @SerialName(descriptionName)
     var description: String = "",
     var slots: MutableList<SlotLocale> = mutableListOf(),
     var linked: MutableList<RecipeLocale> = mutableListOf(),
