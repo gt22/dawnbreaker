@@ -10,7 +10,8 @@ data class XTrigger(
     @Required override var id: String = "",
     var morpheffect: String = "",
     var chance: Int = 0,
-    var level: Int = 1
+    var level: Int = 1,
+    var additive: Boolean = false
 ) : Data {
 
     companion object {

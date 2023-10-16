@@ -42,7 +42,8 @@ data class Verb(
     var audio: String = "",
     @SerialName("maxnotes")
     var maxNotes: Int = 0,
-    var hints: MutableList<String> = mutableListOf()
+    var hints: MutableList<String> = mutableListOf(),
+    var ambits: Boolean = false
 ) : Data {
     init {
         slot?.let { slots.add(0, it) }

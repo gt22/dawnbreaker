@@ -10,6 +10,8 @@ data class Achievement(
     @SerialName("iscategory")
     var isCategory: Boolean = false,
     var label: String = "",
+    @SerialName("ishidden")
+    var isHidden: Boolean = false,
     @SerialName("iconunlocked")
     var iconUnlocked: String = "",
     var category: String = "",

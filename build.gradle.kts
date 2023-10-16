@@ -10,7 +10,7 @@ kotlin {
 }
 
 group = "com.frgm"
-version = "0.1.9.1"
+version = "0.1.10-boh"
 
 
 repositories {

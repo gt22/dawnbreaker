@@ -18,16 +18,30 @@ fun loadVanilla(from: Path) {
     vanilla = Mod.loadVanilla(from)
 }
 
+fun hackRooms() {
+    vanilla.addSource(Paths.get("rooms.json"))
+    vanilla.rooms.forEach {
+        it.aspects.remove("shrouded")
+        it.aspects.remove("sealed")
+    }
+}
+
 fun convert() {
     val base = "bhcontent"
     loadVanilla(Paths.get(base))
+    hackRooms()
     vanilla.saveTo(Paths.get("${base}_norm"), saveAsCore = true)
     Locale.load("en", vanilla, Paths.get("$base/core"))
-        .saveTo(Paths.get("${base}_norm"))
+        .apply {
+            addSource(vanilla, Paths.get("rooms.json"))
+        }.saveTo(Paths.get("${base}_norm"))
     Files.list(Paths.get(base))
         .filter { it.fileName.toString().startsWith("loc_") }
         .forEach {
             Locale.load(it.fileName.toString().removePrefix("loc_"), vanilla, it)
+                .apply {
+                    addSource(vanilla, Paths.get("rooms.json"))
+                }
                 .saveTo(Paths.get("${base}_norm"))
         }
 }

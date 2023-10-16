@@ -22,7 +22,7 @@ data class VerbLocale(
         slot?.let { slots.add(0, it) }
         slot = null
         if(slots.size != base.slots.size) {
-            throw IllegalStateException("Invalid slot localization")
+            throw IllegalStateException("Invalid slot localization at $id")
         }
         slots.zip(base.slots).forEach { (l, b) -> data[b] = l }
     }

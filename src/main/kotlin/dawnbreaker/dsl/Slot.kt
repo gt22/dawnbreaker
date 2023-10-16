@@ -14,7 +14,7 @@ class SlotBuilder(override val t: Slot = Slot()) : Builder<Slot> {
     var greedy by t::greedy
     var noanim by t::noanim
 
-    val essential by t::essential
+    val essential by builder(t::essential, ::MapBuilder)
     val required by builder(t::required, ::MapBuilder)
     val forbidden by builder(t::forbidden, ::MapBuilder)
     val ifaspectspresent by builder(t::ifaspectspresent, ::MapBuilder)

@@ -28,6 +28,7 @@ class RecipeBuilder(override val t: Recipe = Recipe()) : Builder<Recipe> {
     val requirements by mprop(t.requirements, t.requirements_add, t.requirements_remove)
     val extantreqs by mprop(t.extantreqs, t.extantreqs_add, t.extantreqs_remove)
     val tablereqs by mprop(t.tablereqs, t.tablereqs_add, t.tablereqs_remove)
+    val fxreqs by mprop(t.fxreqs, t.fxreqs_add, t.fxreqs_remove)
     val internaldeck by builder(t::internaldeck, ::DeckBuilder)
 
     val linked by lprop(t.linked, t.linked_append, t.linked_prepend, t.linked_remove)

@@ -21,7 +21,7 @@ data class ElementLocale(
         super.register(base, data)
         slots.zip(base.slots).forEach { (slot, baseSlot) ->
             if(slot.id != baseSlot.id) {
-                throw IllegalStateException("Slot id mismatch")
+                throw IllegalStateException("Slot id mismatch at $id: base=${baseSlot.id}, locale=${slot.id}")
             }
             slot.register(baseSlot, data)
         }

@@ -25,7 +25,8 @@ data class LocaleSource(
     var decks: MutableList<DeckLocale> = mutableListOf(),
     var legacies: MutableList<LegacyLocale> = mutableListOf(),
     var endings: MutableList<EndingLocale> = mutableListOf(),
-    var verbs: MutableList<VerbLocale> = mutableListOf()
+    var verbs: MutableList<VerbLocale> = mutableListOf(),
+    val rooms: MutableList<RoomLocale> = mutableListOf()
 )
 
 class Locale(val name: String) {
@@ -73,6 +74,20 @@ class Locale(val name: String) {
         }
     }
 
+    fun addSource(base: Mod, p: Path, name: String = p.fileName.toString()) {
+        addSource(base, read<LocaleSource>(p), name)
+    }
+
+    private fun addSource(base: Mod, source: LocaleSource, s: String) {
+        sources[s] = source
+        register(base, source.elements)
+        register(base, source.recipes)
+        register(base, source.decks)
+        register(base, source.legacies)
+        register(base, source.endings)
+        register(base, source.verbs)
+        register(base, source.rooms)
+    }
     companion object {
 
         private val json = Json {
@@ -99,15 +114,7 @@ class Locale(val name: String) {
                 .filter(Files::isRegularFile)
                 .forEach {
                     if (it.toString().endsWith(".json") && !it.toString().contains("settings")) {
-                        val s = content_p.relativize(it).toString()
-                        val source = read<LocaleSource>(it)
-                        sources[s] = source
-                        register(base, source.elements)
-                        register(base, source.recipes)
-                        register(base, source.decks)
-                        register(base, source.legacies)
-                        register(base, source.endings)
-                        register(base, source.verbs)
+                        addSource(base, read<LocaleSource>(it), content_p.relativize(it).toString())
                     }
                 }
         }

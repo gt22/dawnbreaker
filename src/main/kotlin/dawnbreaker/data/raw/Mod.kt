@@ -40,7 +40,8 @@ data class Source(
     var cultures: MutableList<Culture> = mutableListOf(),
     var dicta: MutableList<Dicta> = mutableListOf(),
     var portals: MutableList<Portal> = mutableListOf(),
-    var achievements: MutableList<Achievement> = mutableListOf()
+    var achievements: MutableList<Achievement> = mutableListOf(),
+    var rooms: MutableList<Room> = mutableListOf()
 ) : Data {
 
     fun prefix(s: String) = mod?.prefix(s) ?: s
@@ -58,24 +59,27 @@ data class Source(
         Dicta::class -> dicta
         Portal::class -> portals
         Achievement::class -> achievements
+        Room::class -> rooms
         else -> throw IllegalArgumentException("Unknown type ${T::class}")
     } as MutableList<T>
-    inline fun <reified T : Data> exists(id: String): Boolean = sequenceOf(
-        elements,
-        recipes,
-        decks,
-        legacies,
-        endings,
-        verbs,
-        cultures,
-        dicta,
-        portals,
-        achievements
-    )
-        .flatten()
-        .filterIsInstance<T>()
-        .filter { it.id == id }
-        .any()
+//    inline fun <reified T : Data> exists(id: String): Boolean = sequenceOf(
+//        elements,
+//        recipes,
+//        decks,
+//        legacies,
+//        endings,
+//        verbs,
+//        cultures,
+//        dicta,
+//        portals,
+//        achievements
+//    )
+//        .flatten()
+//        .filterIsInstance<T>()
+//        .filter { it.id == id }
+//        .any()
+
+    inline fun <reified T : Data> exists(id: String): Boolean = getSource<T>().any { it.id == id }
 
     fun <T : Data> lookup(id: String, from: Iterable<T>) = from.firstOrNull { it.id == id }
 
@@ -95,6 +99,7 @@ data class Source(
     fun applyInherits(m: Mod) {
         elements.forEach { it.inherit(m) }
         recipes.forEach { it.inherit(m) }
+        legacies.forEach { it.inherit(m) }
     }
     fun postprocess() {
 
@@ -133,6 +138,11 @@ data class Mod(
         get() = sources.flatMap { it.value.dicta }
     val portals: List<Portal>
         get() = sources.flatMap { it.value.portals }
+    val achievements: List<Achievement>
+        get() = sources.flatMap { it.value.achievements }
+
+    val rooms: List<Room>
+        get() = sources.flatMap { it.value.rooms }
 
     //End accessors
 
@@ -190,6 +200,10 @@ data class Mod(
 
     fun applyInherits() {
         sources.values.forEach { it.applyInherits(this) }
+    }
+
+    fun addSource(p: Path, name: String = p.fileName.toString()) {
+        sources[name] = read(p)
     }
 
     companion object {

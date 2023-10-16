@@ -25,6 +25,8 @@ class ElementBuilder(override val t: Element = Element()) : Builder<Element> {
     val xtriggers by mprop(t.xtriggers, t.xtriggers_add, t.xtriggers_remove)
     val xexts by mprop(t.xexts, t.xexts_add, t.xexts_remove)
 
+    val ambits by mprop(t.ambits, t.ambits_add, t.ambits_remove)
+
     val induces by lprop(t.induces, t.induces_append, t.induces_prepend, t.induces_remove)
 
     var decayTo by t::decayTo

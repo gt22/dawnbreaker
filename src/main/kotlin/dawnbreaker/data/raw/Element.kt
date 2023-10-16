@@ -68,15 +68,20 @@ data class Element(
     var commute: MutableList<String> = mutableListOf(),
     var manifestationtype: String = "",
     var audio: String = "",
-    var achievements: MutableList<String> = mutableListOf()
+    var achievements: MutableList<String> = mutableListOf(),
+    var ambits: MutableMap<String, Int> = mutableMapOf(),
+    @SerialName("ambits\$add")
+    var ambits_add: MutableMap<String, Int> = mutableMapOf(),
+    @SerialName("ambits\$remove")
+    var ambits_remove: MutableList<String> = mutableListOf(),
 ) : Data {
 
     private var inherited: Boolean = false;
 
     fun inherit(m: Mod) {
-        if(inherited) return
+        if (inherited) return
         inherited = true
-        if(inherits.isEmpty()) return
+        if (inherits.isEmpty()) return
         val parent = m.lookup<Element>(inherits) ?: return
         parent.inherit(m)
 
@@ -86,14 +91,14 @@ data class Element(
         induces += parent.induces
         manifestationtype = parent.manifestationtype
         uniquenessgroup = parent.uniquenessgroup
-        if(lifetime <= 0 && parent.lifetime > 0) lifetime = parent.lifetime
-        if(parent.isAspect) isAspect = true
-        if(parent.resaturate) resaturate = true
-        if(parent.isHidden) isHidden = true
-        if(parent.metafictional) metafictional = true
-        if(burnTo.isEmpty()) burnTo = parent.burnTo
-        if(decayTo.isEmpty()) decayTo = parent.decayTo
-        if(label.isEmpty()) label = parent.label
-        if(description.isEmpty()) description = parent.description
+        if (lifetime <= 0 && parent.lifetime > 0) lifetime = parent.lifetime
+        if (parent.isAspect) isAspect = true
+        if (parent.resaturate) resaturate = true
+        if (parent.isHidden) isHidden = true
+        if (parent.metafictional) metafictional = true
+        if (burnTo.isEmpty()) burnTo = parent.burnTo
+        if (decayTo.isEmpty()) decayTo = parent.decayTo
+        if (label.isEmpty()) label = parent.label
+        if (description.isEmpty()) description = parent.description
     }
 }

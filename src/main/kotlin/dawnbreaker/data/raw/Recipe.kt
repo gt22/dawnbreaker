@@ -50,6 +50,11 @@ data class Recipe(
     var tablereqs_add: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("tablereqs\$remove")
     var tablereqs_remove: MutableList<String> = mutableListOf(),
+    var fxreqs: MutableMap<String, String> = mutableMapOf(),
+    @SerialName("fxreqs\$add")
+    var fxreqs_add: MutableMap<String, String> = mutableMapOf(),
+    @SerialName("fxreqs\$remove")
+    var fxreqs_remove: MutableList<String> = mutableListOf(),
     var internaldeck: Deck? = null,
     var linked: MutableList<Recipe> = mutableListOf(),
     @SerialName("linked\$append")
@@ -72,6 +77,13 @@ data class Recipe(
     var mutations_prepend: MutableList<Mutation> = mutableListOf(),
     @SerialName("mutations\$remove")
     var mutations_remove: MutableList<String> = mutableListOf(),
+    var inductions: MutableList<Induces> = mutableListOf(),
+    @SerialName("inductions\$append")
+    var inductions_append: MutableList<Mutation> = mutableListOf(),
+    @SerialName("inductions\$prepend")
+    var inductions_prepend: MutableList<Mutation> = mutableListOf(),
+    @SerialName("inductions\$remove")
+    var inductions_remove: MutableList<String> = mutableListOf(),
     var purge: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("purge\$add")
     var purge_add: MutableMap<String, Int> = mutableMapOf(),
@@ -104,6 +116,7 @@ data class Recipe(
     var notable: Boolean = false,
     var audiooneshot: String = "",
     var achievements: MutableList<String> = mutableListOf(),
+    var ambittable: Boolean = true,
     //for linked & alt only
     var chance: Int = 0,
     var additional: Boolean = false,

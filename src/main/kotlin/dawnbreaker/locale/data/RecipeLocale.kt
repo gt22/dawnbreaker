@@ -24,25 +24,25 @@ data class RecipeLocale(
         super.register(base, data)
         slots.zip(base.slots).forEach { (slot, baseSlot) ->
             if(slot.id != baseSlot.id) {
-                throw IllegalStateException("Slot id mismatch")
+                throw IllegalStateException("Slot id mismatch at $id: base=${baseSlot.id}, locale=${slot.id}")
             }
             slot.register(baseSlot, data)
         }
         linked.zip(base.linked).forEach { (recipe, baseRecipe) ->
             if(recipe.id != baseRecipe.id) {
-                throw IllegalStateException("Linked recipe id mismatch")
+                throw IllegalStateException("Linked recipe id mismatch at $id: base=${baseRecipe.id}, locale=${recipe.id}")
             }
             recipe.register(baseRecipe, data)
         }
         alt.zip(base.alt).forEach { (recipe, baseRecipe) ->
             if(recipe.id != baseRecipe.id) {
-                throw IllegalStateException("Alternative recipe id mismatch")
+                throw IllegalStateException("Alternative recipe id mismatch at $id: base=${baseRecipe.id}, locale=${recipe.id}")
             }
             recipe.register(baseRecipe, data)
         }
         if(internaldeck != null) {
             if(base.internaldeck == null) {
-                throw IllegalStateException("Internal deck mismatch")
+                throw IllegalStateException("Internal deck mismatch at $id")
             }
             internaldeck!!.register(base.internaldeck!!, data)
         }
