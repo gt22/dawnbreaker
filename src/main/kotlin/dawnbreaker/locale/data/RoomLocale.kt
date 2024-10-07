@@ -1,8 +1,7 @@
 package dawnbreaker.locale.data
 
 import dawnbreaker.data.raw.Data
-import dawnbreaker.data.raw.Room
-import dawnbreaker.data.raw.Slot
+import dawnbreaker.data.raw.primary.Room
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName

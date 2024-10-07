@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Induces
+import dawnbreaker.data.raw.secondary.Induces
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 import dawnbreaker.dsl.internal.builder

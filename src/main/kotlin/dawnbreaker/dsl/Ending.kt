@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Ending
+import dawnbreaker.data.raw.primary.Ending
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 

@@ -1,6 +1,6 @@
 package dawnbreaker.locale.data
 
-import dawnbreaker.data.raw.Legacy
+import dawnbreaker.data.raw.primary.Legacy
 import dawnbreaker.descriptionName
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required

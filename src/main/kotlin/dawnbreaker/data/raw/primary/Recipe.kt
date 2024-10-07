@@ -1,24 +1,34 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.primary
 
+import dawnbreaker.data.raw.Data
+import dawnbreaker.data.raw.Mod
+import dawnbreaker.data.raw.secondary.*
 import dawnbreaker.descriptionName
 import dawnbreaker.requirementsName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
+import kotlinx.serialization.json.*
+import kotlinx.serialization.serializer
 
 @Serializable
 data class Recipe(
     @Required override var id: String = "",
+    var preface: String = "",
     var label: String = "",
+    var icon: String = "",
     var actionid: String = "",
+    var startlabel: String = "",
     var startdescription: String = "",
     @SerialName(descriptionName)
     var description: String = "",
     var warmup: Int = 0,
+    var run: String = "",
     var craftable: Boolean = false,
+    var blocks: Boolean = true,
     var hintonly: Boolean = false,
     var slots: MutableList<Slot> = mutableListOf(),
+    var preslots: MutableList<Slot> = mutableListOf(),
     var effects: MutableMap<String, String> = mutableMapOf(),
     @SerialName("effects\$add")
     var effects_add: MutableMap<String, String> = mutableMapOf(),
@@ -45,6 +55,8 @@ data class Recipe(
     var extantreqs_add: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("extantreqs\$remove")
     var extantreqs_remove: MutableList<String> = mutableListOf(),
+    var ngreq: MutableMap<String, String> = mutableMapOf(),
+    var greq: MutableMap<String, String> = mutableMapOf(),
     var tablereqs: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("tablereqs\$add")
     var tablereqs_add: MutableMap<String, Int> = mutableMapOf(),
@@ -56,6 +68,7 @@ data class Recipe(
     @SerialName("fxreqs\$remove")
     var fxreqs_remove: MutableList<String> = mutableListOf(),
     var internaldeck: Deck? = null,
+    @Serializable(RecipeLinkSerializer::class)
     var linked: MutableList<Recipe> = mutableListOf(),
     @SerialName("linked\$append")
     var linked_append: MutableList<Recipe> = mutableListOf(),
@@ -70,6 +83,9 @@ data class Recipe(
     var alt_prepend: MutableList<Recipe> = mutableListOf(),
     @SerialName("alt\$remove")
     var alt_remove: MutableList<String> = mutableListOf(),
+    @Serializable(RecipeLinkSerializer::class)
+    var lalt: MutableList<Recipe> = mutableListOf(),
+    @Serializable(MutationListSerializer::class)
     var mutations: MutableList<Mutation> = mutableListOf(),
     @SerialName("mutations\$append")
     var mutations_append: MutableList<Mutation> = mutableListOf(),
@@ -123,6 +139,7 @@ data class Recipe(
     var expulsion: Expulsion? = null,
     var challenges: MutableMap<String, String> = mutableMapOf(),
     var topath: String = "",
+    var shuffle: Boolean = false,
 ) : Data {
 
     private var inherited = false;
@@ -144,6 +161,7 @@ data class Recipe(
         haltverb += parent.haltverb
         deleteverb += parent.deleteverb
         deckeffects += parent.deckeffects
+        preslots += parent.preslots
         slots += parent.slots
         alt += parent.alt
         linked += parent.linked
@@ -161,6 +179,28 @@ data class Recipe(
         if(ending.isEmpty()) ending = parent.ending
         if(burnimage.isEmpty()) burnimage = parent.burnimage
         if(portaleffect.isEmpty()) portaleffect = parent.portaleffect
+    }
+
+    companion object {
+
+        fun parseLink(data: JsonElement) = when(data) {
+            is JsonArray -> JsonArray(data.map { parseLinkObject(it) })
+            else -> JsonArray(listOf(parseLinkObject(data)))
+        }
+
+        fun parseLinkObject(data: JsonElement) = when(data) {
+            is JsonObject -> data
+            is JsonPrimitive -> JsonObject(mapOf("id" to data))
+            else -> error("Expected object or id as link")
+        }
+
+    }
+}
+
+object RecipeLinkSerializer : JsonTransformingSerializer<MutableList<Recipe>>(serializer()) {
+
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        return Recipe.parseLink(element)
     }
 
 }

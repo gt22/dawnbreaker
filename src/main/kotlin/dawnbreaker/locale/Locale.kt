@@ -1,7 +1,9 @@
 package dawnbreaker.locale
 
 import dawnbreaker.data.raw.*
+import dawnbreaker.data.raw.primary.*
 import dawnbreaker.locale.data.*
+import dawnbreaker.read
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -33,6 +35,21 @@ class Locale(val name: String) {
 
     private val data: MutableMap<Data, LocaleData<*>> = mutableMapOf()
     private var sources: MutableMap<String, LocaleSource> = mutableMapOf()
+
+    val elements: List<ElementLocale>
+        get() = sources.flatMap { it.value.elements }
+    val recipes: List<RecipeLocale>
+        get() = sources.flatMap { it.value.recipes }
+    val decks: List<DeckLocale>
+        get() = sources.flatMap { it.value.decks }
+    val legacies: List<LegacyLocale>
+        get() = sources.flatMap { it.value.legacies }
+    val endings: List<EndingLocale>
+        get() = sources.flatMap { it.value.endings }
+    val verbs: List<VerbLocale>
+        get() = sources.flatMap { it.value.verbs }
+    val rooms: List<RoomLocale>
+        get() = sources.flatMap { it.value.rooms }
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Data> get(data: T): LocaleData<T> {
@@ -75,7 +92,7 @@ class Locale(val name: String) {
     }
 
     fun addSource(base: Mod, p: Path, name: String = p.fileName.toString()) {
-        addSource(base, read<LocaleSource>(p), name)
+        addSource(base, json.read<LocaleSource>(p), name)
     }
 
     private fun addSource(base: Mod, source: LocaleSource, s: String) {
@@ -94,19 +111,7 @@ class Locale(val name: String) {
             isLenient = true
             ignoreUnknownKeys = true
             prettyPrint = true
-        }
-
-        private inline fun <reified T> read(p: Path): T {
-            val text = Files.newBufferedReader(p).use { it.readText() }.replace("\uFEFF", "")
-            if (text.isEmpty()) return json.decodeFromString("{}")
-
-            return try {
-                json.decodeFromJsonElement(Mod.normalizeKeys(json.parseToJsonElement(text)))
-            } catch (e: SerializationException) {
-                System.err.println(p)
-                System.err.println(e.localizedMessage)
-                json.decodeFromString("{}")
-            }
+            allowTrailingComma = true
         }
 
         fun load(name: String, base: Mod, content_p: Path) = Locale(name).apply {
@@ -114,7 +119,7 @@ class Locale(val name: String) {
                 .filter(Files::isRegularFile)
                 .forEach {
                     if (it.toString().endsWith(".json") && !it.toString().contains("settings")) {
-                        addSource(base, read<LocaleSource>(it), content_p.relativize(it).toString())
+                        addSource(base, json.read<LocaleSource>(it), content_p.relativize(it).toString())
                     }
                 }
         }

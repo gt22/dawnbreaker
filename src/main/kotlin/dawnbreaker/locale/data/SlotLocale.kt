@@ -1,6 +1,6 @@
 package dawnbreaker.locale.data
 
-import dawnbreaker.data.raw.Slot
+import dawnbreaker.data.raw.secondary.Slot
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable

@@ -1,9 +1,8 @@
 package dawnbreaker.locale.data
 
-import dawnbreaker.data.raw.Deck
+import dawnbreaker.data.raw.primary.Deck
 import dawnbreaker.descriptionName
 import dawnbreaker.locale.LocaleData
-import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

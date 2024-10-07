@@ -1,5 +1,6 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.secondary
 
+import dawnbreaker.data.raw.Data
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
@@ -10,7 +11,7 @@ data class XTrigger(
     @Required override var id: String = "",
     var morpheffect: String = "",
     var chance: Int = 0,
-    var level: Int = 1,
+    var level: String = "1",
     var additive: Boolean = false
 ) : Data {
 

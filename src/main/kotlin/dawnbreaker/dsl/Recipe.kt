@@ -1,7 +1,7 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Recipe
-import dawnbreaker.data.raw.Slot
+import dawnbreaker.data.raw.primary.Recipe
+import dawnbreaker.data.raw.secondary.Slot
 import dawnbreaker.dsl.internal.*
 
 @ModDsl

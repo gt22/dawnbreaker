@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Culture
+import dawnbreaker.data.raw.primary.Culture
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 import dawnbreaker.dsl.internal.mprop

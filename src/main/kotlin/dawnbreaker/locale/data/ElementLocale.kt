@@ -1,7 +1,7 @@
 package dawnbreaker.locale.data
 
 import dawnbreaker.data.raw.Data
-import dawnbreaker.data.raw.Element
+import dawnbreaker.data.raw.primary.Element
 import dawnbreaker.descriptionName
 import dawnbreaker.locale.LocaleData
 import kotlinx.serialization.Required

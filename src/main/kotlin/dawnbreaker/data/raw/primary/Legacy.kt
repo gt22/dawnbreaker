@@ -1,10 +1,12 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.primary
 
+import dawnbreaker.data.raw.Data
+import dawnbreaker.data.raw.Mod
+import dawnbreaker.data.raw.secondary.StatusBarElement
 import dawnbreaker.descriptionName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 import kotlinx.serialization.json.JsonObject
 
 @Serializable

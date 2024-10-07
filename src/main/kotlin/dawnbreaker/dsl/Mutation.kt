@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Mutation
+import dawnbreaker.data.raw.secondary.Mutation
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 

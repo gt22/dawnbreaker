@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Expulsion
+import dawnbreaker.data.raw.secondary.Expulsion
 import dawnbreaker.dsl.internal.*
 
 @ModDsl

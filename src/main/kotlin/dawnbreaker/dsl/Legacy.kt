@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Legacy
+import dawnbreaker.data.raw.primary.Legacy
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.lprop
 import dawnbreaker.dsl.internal.mprop

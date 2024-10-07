@@ -1,5 +1,7 @@
 package dawnbreaker.data.raw
 
+import dawnbreaker.data.raw.primary.*
+import dawnbreaker.read
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import java.lang.IllegalArgumentException
@@ -84,7 +86,7 @@ data class Source(
     fun <T : Data> lookup(id: String, from: Iterable<T>) = from.firstOrNull { it.id == id }
 
     fun <T : Data> lookupWildcard(id: String, from: Iterable<T>) = from.filter {
-        if(it.id == id) {
+        if (it.id == id) {
             true
         } else if (id.endsWith('*')) {
             it.id.startsWith(id.substring(0, id.length - 1))
@@ -92,6 +94,7 @@ data class Source(
             false
         }
     }.toList()
+
     inline fun <reified T : Data> lookup(id: String): T? = lookup(id, getSource())
 
     inline fun <reified T : Data> lookupWildcard(id: String): List<T> = lookupWildcard(id, getSource())
@@ -101,6 +104,7 @@ data class Source(
         recipes.forEach { it.inherit(m) }
         legacies.forEach { it.inherit(m) }
     }
+
     fun postprocess() {
 
     }
@@ -109,6 +113,9 @@ data class Source(
 
     }
 }
+
+class ModFileLoadException(path: Path, cause: Exception? = null)
+    : Exception(path.toString(), cause)
 
 data class Mod(
     val prefix_v: String = "",
@@ -169,7 +176,7 @@ data class Mod(
         val m = mutableMapOf<String, JsonElement>()
         m["synopsis.json"] = cleanup(Json.encodeToJsonElement(synopsis))
         for ((path, source) in sources) {
-            m["${if(saveAsCore) "core" else "content"}/$path"] = cleanup(Json.encodeToJsonElement(source))
+            m["${if (saveAsCore) "core" else "content"}/$path"] = cleanup(Json.encodeToJsonElement(source))
         }
         return m
     }
@@ -203,7 +210,7 @@ data class Mod(
     }
 
     fun addSource(p: Path, name: String = p.fileName.toString()) {
-        sources[name] = read(p)
+        sources[name] = json.read(p)
     }
 
     companion object {
@@ -211,6 +218,7 @@ data class Mod(
         private val json = Json {
             isLenient = true
             prettyPrint = true
+            allowTrailingComma = true
         }
 
         fun loadMod(p: Path) = load(p.resolve("content"), p.resolve("synopsis.json"))
@@ -226,49 +234,27 @@ data class Mod(
                         this
                     }
                 }
+
                 is JsonObject -> JsonObject(mapValues { (_, v) -> cleanup(v) })
                 is JsonArray -> JsonArray(map(::cleanup))
                 else -> return this
             }
         }
 
-        fun normalizeKeys(j: JsonElement): JsonElement = when (j) {
-            is JsonObject -> {
-                JsonObject(
-                    j
-                    .mapKeys { (k, _) -> k.lowercase() }
-                    .mapValues { (_, v) -> normalizeKeys(v) }
-                )
-            }
-            is JsonArray -> {
-                JsonArray(j.map(::normalizeKeys))
-            }
-            else -> j
-        }
-
-        private inline fun <reified T> read(p: Path): T {
-            val text = Files.newBufferedReader(p).use { it.readText() }.replace("\uFEFF", "")
-            if (text.isEmpty()) return json.decodeFromString("{}")
-
-            return try {
-                json.decodeFromJsonElement(normalizeKeys(json.parseToJsonElement(text)))
-            } catch (e: SerializationException) {
-                System.err.println(p)
-                System.err.println(e.localizedMessage)
-                json.decodeFromString("{}")
-            }
-        }
-
         fun load(content_p: Path, synopsis_p: Path? = null) = Mod().apply {
             if (synopsis_p != null) {
-                synopsis = read(synopsis_p)
+                synopsis = json.read(synopsis_p)
             }
             Files.walk(content_p)
                 .filter(Files::isRegularFile)
                 .forEach {
                     if (it.toString().endsWith(".json") && !it.toString().contains("settings")) {
-                        val name = content_p.relativize(it).toString()
-                        sources[name] = read(it)
+                        try {
+                            val name = content_p.relativize(it).toString()
+                            sources[name] = json.read(it)
+                        } catch (e: Exception) {
+                            throw ModFileLoadException(it, e)
+                        }
                     }
                 }
         }

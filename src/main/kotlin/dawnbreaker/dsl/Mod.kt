@@ -2,6 +2,7 @@ package dawnbreaker.dsl
 
 import dawnbreaker.ModContext
 import dawnbreaker.data.raw.*
+import dawnbreaker.data.raw.primary.*
 import dawnbreaker.dsl.internal.*
 
 

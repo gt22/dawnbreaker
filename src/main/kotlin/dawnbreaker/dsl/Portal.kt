@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Portal
+import dawnbreaker.data.raw.primary.Portal
 import dawnbreaker.dsl.internal.Builder
 import dawnbreaker.dsl.internal.ModDsl
 import dawnbreaker.dsl.internal.lprop

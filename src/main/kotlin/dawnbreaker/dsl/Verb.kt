@@ -1,6 +1,6 @@
 package dawnbreaker.dsl
 
-import dawnbreaker.data.raw.Verb
+import dawnbreaker.data.raw.primary.Verb
 import dawnbreaker.dsl.internal.*
 
 @ModDsl

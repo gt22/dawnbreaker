@@ -1,10 +1,8 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.secondary
 
-import dawnbreaker.descriptionName
+import dawnbreaker.data.raw.Data
 import kotlinx.serialization.Required
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Slot(

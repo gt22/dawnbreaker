@@ -1,10 +1,10 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.primary
 
+import dawnbreaker.data.raw.Data
 import dawnbreaker.descriptionName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Portal(

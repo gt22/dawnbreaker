@@ -1,5 +1,6 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.primary
 
+import dawnbreaker.data.raw.Data
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

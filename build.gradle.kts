@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
-    kotlin("jvm") version "1.8.0"
-    kotlin("plugin.serialization") version "1.8.0"
+    kotlin("jvm") version "2.0.20"
+    kotlin("plugin.serialization") version "2.0.20"
     `maven-publish`
 }
 
@@ -10,7 +10,7 @@ kotlin {
 }
 
 group = "com.frgm"
-version = "0.1.10-boh"
+version = "0.2.1-boh"
 
 
 repositories {
@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 }
 
 tasks.withType<KotlinCompile> {

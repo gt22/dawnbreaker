@@ -1,4 +1,4 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.secondary
 
 import kotlinx.serialization.Serializable
 

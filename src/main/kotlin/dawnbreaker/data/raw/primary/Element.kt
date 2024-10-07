@@ -1,10 +1,12 @@
-package dawnbreaker.data.raw
+package dawnbreaker.data.raw.primary
 
+import dawnbreaker.data.raw.Data
+import dawnbreaker.data.raw.Mod
+import dawnbreaker.data.raw.secondary.*
 import dawnbreaker.descriptionName
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class Element(
@@ -31,6 +33,7 @@ data class Element(
     var slots_prepend: MutableList<Slot> = mutableListOf(),
     @SerialName("slots\$remove")
     var slots_remove: MutableList<String> = mutableListOf(),
+    var imms: MutableList<Imm> = mutableListOf(),
     @Serializable(XTriggerListSerializer::class)
     var xtriggers: MutableMap<String, MutableList<XTrigger>> = mutableMapOf(),
     @SerialName("xtriggers\$add")
@@ -69,11 +72,13 @@ data class Element(
     var manifestationtype: String = "",
     var audio: String = "",
     var achievements: MutableList<String> = mutableListOf(),
+    var reverseambittablesdisplay: Boolean = false,
     var ambits: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("ambits\$add")
     var ambits_add: MutableMap<String, Int> = mutableMapOf(),
     @SerialName("ambits\$remove")
     var ambits_remove: MutableList<String> = mutableListOf(),
+    var alphalabeloverride: String = ""
 ) : Data {
 
     private var inherited: Boolean = false;
@@ -87,6 +92,7 @@ data class Element(
 
         aspects += parent.aspects
         xtriggers += parent.xtriggers
+        imms += parent.imms
         slots += parent.slots
         induces += parent.induces
         manifestationtype = parent.manifestationtype
@@ -100,5 +106,7 @@ data class Element(
         if (decayTo.isEmpty()) decayTo = parent.decayTo
         if (label.isEmpty()) label = parent.label
         if (description.isEmpty()) description = parent.description
+        if (!reverseambittablesdisplay) reverseambittablesdisplay = parent.reverseambittablesdisplay
+        if (alphalabeloverride.isEmpty()) alphalabeloverride = parent.alphalabeloverride
     }
 }
